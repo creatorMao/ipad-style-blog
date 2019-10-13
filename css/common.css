@@ -1,0 +1,20 @@
+    /*公共样式begin*/
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .flex-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    html {
+        font-size: 16px;
+    }
+
+    * {
+        font-family: "SF Pro SC", "HanHei SC", "SF Pro Text", "Myriad Set Pro", "SF Pro Icons", "PingFang SC", "Helvetica Neue", "Helvetica", "Arial", sans-serif
+    }
+
+    /*公共样式end*/

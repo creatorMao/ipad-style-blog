@@ -1,0 +1,32 @@
+.icon-root{
+    width: 100%;
+    height: 100%;
+}
+.icon-weather {
+    background: url("/src/images/weather.png");
+    background-size: cover;
+}
+.icon-photo {
+    background: url("/src/images/photo.png");
+    background-size: cover;
+}
+.icon-seting {
+    background: url("/src/images/seting.png");
+    background-size: cover;
+}
+.icon-note {
+    background: url("/src/images/note.png");
+    background-size: cover;
+}
+.icon-md {
+    background: url("/src/images/md.png");
+    background-size: cover;
+}
+.icon-music {
+    background: url("/src/images/music.png");
+    background-size: cover;
+}
+.icon-book {
+    background: url("/src/images/book.png");
+    background-size: cover;
+}
