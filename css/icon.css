@@ -30,3 +30,11 @@
     background: url("/src/images/book.png");
     background-size: cover;
 }
+.icon-right-arow {
+    background: url("/src/images/right-arow.png");
+    background-size: cover;
+}
+.icon-clound {
+    background: url("/src/images/clound.png");
+    background-size: cover;
+}

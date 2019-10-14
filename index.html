@@ -8,6 +8,7 @@
     <title>ipad-style-blog</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/icon.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 
 <body>
@@ -25,11 +26,25 @@
                         <span class="day">10月11日 星期五</span>
                     </div>
                     <div class="items weather flex-column">
-                        <div class="nav"></div>
+                        <div class="nav flex-row">
+                            <div class="left flex-row">
+                                    <div class="icon-weather"></div>
+                                    <div>天气</div>
+                            </div>
+                            <div class="icon-right-arow"></div>
+                        </div>
                         <div class="weather-detail flex-row">
-                            <div>1</div>
-                            <div>2</div>
-                            <div>3</div>
+                            <div class="icon-clound">
+                            </div>
+                            <div class="weather-text">
+                                <div class="area">杭州市</div>
+                                <div>多云</div>
+                                <div>降雨概率：10%</div>
+                            </div>
+                            <div class="weather-text weather-temp">
+                                <div class="current-temp">23</div>
+                                <div>28/21</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -96,10 +111,16 @@
                     </div>
 
                 </div>
+                <div class="app-content">
+
+                </div>
             </div>
         </div>
     </div>
 </body>
+<script>
+   
+</script>
 <style>
     /*背景begin*/
     .root-bg {
@@ -173,7 +194,26 @@
         min-width: 280px;
         background: rgba(255, 255, 255, 0.5);
         justify-content: center;
-        padding: 10px;
+        padding: 7px;
+    }
+
+    .app-content{
+        width: 2%;
+        height: 2%;
+        position: absolute;
+        background:transparent;
+        top: 67px;
+        left: 423px;
+    }
+    .app-content-show{
+        width: 200%;
+        height: 200%;
+        margin: 0%;
+        margin-top: -300px;
+        margin-left: -500px;
+        margin-bottom: 500px;
+        background: white;
+        transition: all 0.5s ease-in-out; 
     }
 
     .menu-bar .item {
@@ -202,26 +242,63 @@
     }
 
     .time-line .weather {
-        background: white;
-        opacity: 0.5;
-        height: 150px;
+        background: rgba(255,255,255,0.6);
         border-radius: 15px;
         width: 300px;
         margin-top: 20px;
         justify-items: space-between;
+        color: rgba(0,0,0,0.7);
     }
 
     .time-line .weather .nav {
-        height: 40px;
+        height: 30px;
+        justify-content:space-between;
+        padding: 7px;
+        align-items:center;
     }
+    .nav .icon-weather{
+        width: 25px;
+        height: 25px;;
+        margin-right: 5px;
+    }
+    .nav .icon-right-arow{
+        width:20px;
+        height: 20px;
+        cursor: pointer;;
+    }
+    .nav .left{
+        align-items:center;
+    }
+    
 
     .time-line .weather .weather-detail {
         flex-grow: 1;
-        color: black;
+        align-items: center;
+    }
+    .weather-detail .icon-clound{
+        width: 100px;
+        height: 100px;
+    }
+    .weather-text div{
+        margin: 2px 0px;
+        font-size: 0.9rem;
+    }
+    .weather-text .area{
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    .weather-text .current-temp{
+        font-size: 3rem;
+        font-weight:lighter;
+    }
+    .weather-temp{
+        text-align: center;
     }
 
     .weather-detail>div {
         flex-grow: 1;
+        margin: 0 5px;
+        box-sizing: border-box;
     }
 
 
@@ -233,15 +310,15 @@
     }
 
     .apps-wrap .items {
-        width: 80px;
+        width: 70px;
         margin: 10px;
         text-align: center;
         color: white;
     }
 
     .app-icon {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
         border-radius: 15px;
         background: transparent;
         margin-bottom: 5px;
