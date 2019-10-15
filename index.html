@@ -13,7 +13,8 @@
 
 <body>
     <div class="root-bg">
-        <div class="layout wallpaper">
+        <div class="layout">
+            <div class="wallpaper"></div>
         </div>
         <div class="layout content">
             <div class="status-bar flex-row">
@@ -117,10 +118,107 @@
             </div>
         </div>
     </div>
+    <div class="back">返回桌面（测试用）</div>
 </body>
-<script>
-   
-</script>
+     <script type="text/javascript">
+        (function () {
+            var myModObj = {
+                /*公共变量存储*/
+                dataStore: {
+                    
+                },
+                /*组件对象存储*/
+                uiStore: {
+                  
+                },
+                /*初始化*/
+                init: function () {
+                    this.initUI(); //初始化组件
+                    this.initData(); //初始化数据
+                    this.initEvent(); //初始化事件
+                },
+                /*初始化组件*/
+                initUI: function () {
+
+                },
+                /*初始化数据*/
+                initData: function () {
+                },
+                /*初始化事件*/
+                initEvent: function () {
+                    this.bindClick();
+                },
+                bindClick:function(){
+                    var that=this;
+                    $(".app-icon").bind("click",function(){
+                        that.calcuteOffSet(this);
+                        that.transition();
+                         //打开内容页
+                        $(".app-content:first").css(that.dataStore.orignCss);
+                        setTimeout(() => {
+                            $(".app-content:first").css(that.dataStore.NewCss);
+                        },10);
+                     });
+
+                    $(".back").bind("click",function(){
+                        that.transition();
+                         //关闭内容页
+                         var css=that.dataStore.orignCss;
+                         css.background='rgba(255,255,255,0)';
+                         $(".app-content:first").css(css);
+                         setTimeout(() => {
+                            $(".app-content:first").attr("style","");
+                         }, 600);
+                    });
+                },
+                calcuteOffSet:function(that){
+                    var maxWidth = 1000;
+                    var maxHeight = 720;
+                    var currentTop=$(that).position().top;
+                    var currentLeft=$(that).position().left;
+                    var offsetTop = -currentTop / maxHeight;
+                    var offsetLft = -currentLeft / maxWidth;
+
+                    this.dataStore.orignCss= {
+                        width: '60px',
+                        height: '60px',
+                        top: currentTop + 6,
+                        left: currentLeft + 3,
+                        background: 'rgba(255,255,255,1)',
+                        'border-radius': '15px'
+                    };
+
+                    this.dataStore.NewCss = {
+                        top: offsetTop,
+                        left: offsetLft,
+                        width: '100%',
+                        height: '100%',
+                        transition: 'all 0.4s ease-in-out',
+                        background: 'rgba(255,255,255,1)'
+                    };
+                },
+                transition:function(){
+                    var that=this;
+                    //底部按钮向下移动
+                    $(".menu-bar:first").toggleClass("menu-bar-hide");
+                    //壁纸放大特效
+                    $(".wallpaper:first").toggleClass("wallpaper-active");
+                    //内容往里缩
+                    $(".page:first").toggleClass("page-hide");
+
+                }
+            };
+            //赋给公共的对象
+            window.modObj = myModObj;
+        })();
+
+        /**
+        * 页面初始化
+        */
+        $(function () {
+            modObj.init();
+        });
+    </script> 
 <style>
     /*背景begin*/
     .root-bg {
@@ -146,6 +244,15 @@
         background: url("/src/images/wallpaper.jpg");
         background-size: cover;
         z-index: 1;
+        width: 100%;
+        height: 100%;
+        transition: all 0.5s ease-in-out;
+    }
+    .wallpaper-active{
+        width: 130%;
+        height: 130%;
+        margin-top: -15%;
+        margin-left: -15%;
     }
 
     .content {
@@ -175,9 +282,13 @@
         width: 100%;
         height: 100%;
         position: relative;
-        padding: 30px;
+        padding: 32px;
         box-sizing: border-box;
         color: white;
+        transition: padding 0.4s ease-in-out;   
+    }
+    .page-hide{
+        padding: 45px;
     }
 
     .page-block {
@@ -195,15 +306,14 @@
         background: rgba(255, 255, 255, 0.5);
         justify-content: center;
         padding: 7px;
+        transition: all 0.5s ease-in-out;
+    }
+    .menu-bar-hide{
+        bottom: -100px;
     }
 
     .app-content{
-        width: 2%;
-        height: 2%;
         position: absolute;
-        background:transparent;
-        top: 67px;
-        left: 423px;
     }
     .app-content-show{
         width: 200%;
