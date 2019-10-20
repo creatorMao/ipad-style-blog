@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="app-content">
-
+                    <iframe src="" id="content-iframe"></iframe>
                 </div>
             </div>
         </div>
@@ -142,11 +142,20 @@
                         setTimeout(() => {
                             $(".app-content:first").css(that.dataStore.NewCss);
                         },10);
+
+                        setTimeout(function(){
+                            $("#content-iframe").show();
+                            //$("#content-iframe")[0].src="/appPages/alipay.html";
+                            $("#content-iframe")[0].src="https://www.baidu.com";
+                        },190)
                      });
 
                     $(".back").bind("click",function(){
                         that.transition();
                          //关闭内容页
+                         $("#content-iframe").hide();
+                         $("#content-iframe")[0].src="";
+
                          var css=that.dataStore.orignCss;
                          css.background='rgba(255,255,255,0)';
                          $(".app-content:first").css(css);
@@ -298,6 +307,8 @@
 
     .app-content{
         position: absolute;
+        width: 0px;
+        height: 0px;
     }
     .app-content-show{
         width: 200%;
@@ -308,6 +319,10 @@
         margin-bottom: 500px;
         background: white;
         transition: all 0.5s ease-in-out; 
+    }
+    #content-iframe{
+        width: 100%;
+        height: 100%;
     }
 
     .menu-bar .item {
