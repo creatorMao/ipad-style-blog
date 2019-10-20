@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/icon.css">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="/js/base.js"></script>
 </head>
 
 <body>
@@ -49,68 +51,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="page-block apps-wrap flex-row">
-                    <div class="items">
+                <div class="page-block apps-wrap flex-row" id="apps-wrap">
+                    <div class="items" v-for="app in apps">
                         <div class="app-icon">
-                            <div class="icon-root icon-weather"></div>
+                            <div class="icon-root" :class="app.icon"></div>
                         </div>
-                        <div class="name">天气</div>
-                    </div>
-                    <div class="items">
-                        <div class="app-icon">
-                            <div class="icon-root icon-note"></div>
-                        </div>
-                        <div class="name">博客</div>
-                    </div>
-                    <div class="items">
-                        <div class="app-icon">
-                            <div class="icon-root icon-photo"></div>
-                        </div>
-                        <div class="name">照片</div>
-                    </div>
-
-                    <div class="items">
-                        <div class="app-icon">
-                            <div class="icon-root icon-seting"></div>
-                        </div>
-                        <div class="name">设置</div>
-                    </div>
-                    <div class="items">
-                        <div class="app-icon">
-                            <div class="icon-root icon-music"></div>
-                        </div>
-                        <div class="name">音乐</div>
-                    </div>
-                    <div class="items">
-                        <div class="app-icon">
-                            <div class="icon-root icon-book"></div>
-                        </div>
-                        <div class="name">书籍</div>
-                    </div>
-                    <div class="items">
-                        <div class="app-icon">
-                            <div class="icon-root icon-md"></div>
-                        </div>
-                        <div class="name">md文档</div>
+                        <div class="name">{{app.name}}</div>
                     </div>
                 </div>
-                <div class="menu-bar flex-row">
-                    <div class="item">
+                <div class="menu-bar flex-row" id="mene-bar-wrap">
+                    <div class="item" v-for="app in apps">
                         <div class="app-icon">
-                            <div class="icon-root icon-weather"></div>
+                            <div class="icon-root" :class='app.icon'></div>
                         </div>
                     </div>
-                    <div class="item">
-                        <div class="app-icon">
-                            <div class="icon-root icon-photo"></div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="app-icon">
-                            <div class="icon-root icon-seting"></div>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="app-content">
 
@@ -125,7 +79,20 @@
             var myModObj = {
                 /*公共变量存储*/
                 dataStore: {
-                    
+                    apps:[
+                        {"name":"天气","icon":"icon-weather"},
+                        {"name":"博客","icon":"icon-note"},
+                        {"name":"照片","icon":"icon-photo"},
+                        {"name":"设置","icon":"icon-seting"},
+                        {"name":"音乐","icon":"icon-music"},
+                        {"name":"书籍","icon":"icon-book"},
+                        {"name":"md文档","icon":"icon-md"}
+                    ],
+                    menuBarApps:[
+                        {"name":"天气","icon":"icon-weather"},
+                        {"name":"天气","icon":"icon-photo"},
+                        {"name":"天气","icon":"icon-seting"},
+                    ]
                 },
                 /*组件对象存储*/
                 uiStore: {
@@ -139,10 +106,27 @@
                 },
                 /*初始化组件*/
                 initUI: function () {
-
+                    this.initApps();
                 },
                 /*初始化数据*/
                 initData: function () {
+                   
+                },
+                initApps:function(){
+                    var that=this;
+                    this.uiStore.apps = new Vue({
+                        el: '#apps-wrap',
+                        data: {
+                            apps: that.dataStore.apps
+                        }
+                    });
+
+                    this.uiStore.menuBar=new Vue({
+                        el: '#mene-bar-wrap',
+                        data: {
+                            apps: that.dataStore.menuBarApps
+                        }
+                    });
                 },
                 /*初始化事件*/
                 initEvent: function () {
