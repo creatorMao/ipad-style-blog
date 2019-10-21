@@ -2,6 +2,14 @@
     width: 100%;
     height: 100%;
 }
+.icon-github{
+    background: url("/src/images/github.png");
+    background-size: cover;
+}
+.icon-alipay{
+    background: url("/src/images/alipay.png");
+    background-size: cover;
+}
 .icon-weather {
     background: url("/src/images/weather.png");
     background-size: cover;

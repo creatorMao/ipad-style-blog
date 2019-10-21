@@ -53,7 +53,7 @@
                 </div>
                 <div class="page-block apps-wrap flex-row" id="apps-wrap">
                     <div class="items" v-for="app in apps">
-                        <div class="app-icon">
+                        <div class="app-icon" @click="openApp(app.url,$event)">
                             <div class="icon-root" :class="app.icon"></div>
                         </div>
                         <div class="name">{{app.name}}</div>
@@ -86,7 +86,9 @@
                         {"name":"设置","icon":"icon-seting"},
                         {"name":"音乐","icon":"icon-music"},
                         {"name":"书籍","icon":"icon-book"},
-                        {"name":"md文档","icon":"icon-md"}
+                        {"name":"md文档","icon":"icon-md"},
+                        {"name":"支付宝","icon":"icon-alipay"},
+                        {"name":"github","icon":"icon-github","url":'www.github.com'}
                     ],
                     menuBarApps:[
                         {"name":"天气","icon":"icon-weather"},
@@ -118,7 +120,11 @@
                         el: '#apps-wrap',
                         data: {
                             apps: that.dataStore.apps
-                        }
+                        },
+                        methods: {
+                            openApp(i,event) {
+                            }
+                        },
                     });
 
                     this.uiStore.menuBar=new Vue({
@@ -145,9 +151,9 @@
 
                         setTimeout(function(){
                             $("#content-iframe").show();
-                            //$("#content-iframe")[0].src="/appPages/alipay.html";
-                            $("#content-iframe")[0].src="https://www.baidu.com";
-                        },190)
+                            $("#content-iframe")[0].src="/appPages/md.html";
+                            //$("#content-iframe")[0].src="https://www.baidu.com";
+                        },380)
                      });
 
                     $(".back").bind("click",function(){
