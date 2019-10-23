@@ -3,40 +3,187 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Marked in the browser</title> 
-    <link rel="stylesheet" href="/css/common.css"/>
+    <title>Marked in the browser</title>
+    <link rel="stylesheet" href="/css/common.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 
 <body>
-    <div id="content"></div>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script>
-
-    </script>
-    <script type="text/javascript">
-        (function () {
-            var myModObj = {
-                init:function(){
-                    this.initMDDocument("content", "\n## 什么是代理\n\n所谓代理，就是指代表，代表谁做什么事。\n\n## 正向代理\n\n#### 使用场景：\n翻墙软件的使用。\n\n翻墙的原理：找到一个可以访问国外网站的服务器，我们将请求发送给它，让它代替我们去访问网站，并将结果返回给我。\n\n这个过程中，可以访问外国网站的服务器 就是一个代理。\n\n\n#### 解释\n正向代理： \"它代理的是客户端，代客户端发出请求\"。\n\n#### 特点\n\n- 客户端非常明确自己要访问的地址。\n- 服务端只清楚请求是来自哪个代理服务器，而不清楚具体的原客户端。\n\nps: 比如我想访问twitter,我在电脑上配置了一个代理服务器(ssr?)，每当我访问这个网站的时候，实际上是这个代理服务器在帮我发送请求访问，等twitter的服务器有响应了之后代理服务器再将结果返回给我。它是一个中转人。\n\n#### 图例\n![image](https://note.youdao.com/yws/res/2768/7EE7DBF192E64C748DE21E62CF967381)\n\n## 反向代理\n\n#### 使用场景\n\nNginx反向代理服务器的负载均衡。\n\n例如百度的搜索页面，每天你几乎都会去访问它，中国如果每人访问一次，单一的一个服务器肯定承受不了这么大的请求量。\n\n但如果百度进行了优化，为每个地区分别设置了一台服务器，那么就可以有效的解决性能问题。\n\n而所有人访问的入口都是 www.baidu.com 这个网址，如何实现不同地区的人使用同一个入口的情况下，后台会分发对应请求到不同的的服务器？\n\n只要在服务器里再安装一个程序，用户的请求先经过这个程序，由这个程序分发给不同的服务器。\n\n这个程序就是反向代理服务器，常见的是Nginx。\n\n\n#### 解释\n\n反向代理： 它代理的是服务端，代服务端接收请求。\n\n\n#### 特点\n\n客户端是无感知代理的存在的，访问者并不知道自己访问的是一个代理。因为客户端不需要任何配置就可以访问。\n\n#### 图例\n![image](https://note.youdao.com/yws/res/2770/CAFD5D535D48411BA2D26B84186CCBFB)\n\n\n\n## THANKS\n\n[Nginx 相关介绍(Nginx是什么?能干嘛?)](https://www.cnblogs.com/wcwnina/p/8728391.html)\n");
-                },
-                initMDDocument: function (id, content) {
-                    document.getElementById(id).innerHTML =marked(content);
-                }
-            };
-            //赋给公共的对象
-            window.mdDocumentTool = myModObj;
-        })();
-
-         /**
-        * 页面初始化
-        */
-        $(function () {
-            mdDocumentTool.init();
-        });
-    </script>
+    <div class="article-wrap flex-row">
+        <div class="article-list" id="article-list-container">
+            <div class="artice-item" v-for="article in articleList" @click="openDetail(article.detail,$event)">
+                <h2>{{article.title}}</h2>
+                <span class="abstract">{{article.abstract}}</span>
+            </div>
+        </div>
+        <div class="article-content">
+            <div id="content"></div>
+        </div>
+    </div>
+    </div>
 </body>
-<style>
-</style>
+<script type="text/javascript">
+    (function () {
+        var myModObj = {
+            dataStore: {
+                articleList: [
+                    {
+                        "title": "什么是代理", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么是代理\n\n所谓代理，就是指代表，代表谁做什么事。\n\n## 正向代理\n\n#### 使用场景：\n翻墙软件的使用。\n\n翻墙的原理：找到一个可以访问国外网站的服务器，我们将请求发送给它，让它代替我们去访问网站，并将结果返回给我。\n\n这个过程中，可以访问外国网站的服务器 就是一个代理。\n\n\n#### 解释\n正向代理： \"它代理的是客户端，代客户端发出请求\"。\n\n#### 特点\n\n- 客户端非常明确自己要访问的地址。\n- 服务端只清楚请求是来自哪个代理服务器，而不清楚具体的原客户端。\n\nps: 比如我想访问twitter,我在电脑上配置了一个代理服务器(ssr?)，每当我访问这个网站的时候，实际上是这个代理服务器在帮我发送请求访问，等twitter的服务器有响应了之后代理服务器再将结果返回给我。它是一个中转人。\n\n#### 图例\n![image](https://note.youdao.com/yws/res/2768/7EE7DBF192E64C748DE21E62CF967381)\n\n## 反向代理\n\n#### 使用场景\n\nNginx反向代理服务器的负载均衡。\n\n例如百度的搜索页面，每天你几乎都会去访问它，中国如果每人访问一次，单一的一个服务器肯定承受不了这么大的请求量。\n\n但如果百度进行了优化，为每个地区分别设置了一台服务器，那么就可以有效的解决性能问题。\n\n而所有人访问的入口都是 www.baidu.com 这个网址，如何实现不同地区的人使用同一个入口的情况下，后台会分发对应请求到不同的的服务器？\n\n只要在服务器里再安装一个程序，用户的请求先经过这个程序，由这个程序分发给不同的服务器。\n\n这个程序就是反向代理服务器，常见的是Nginx。\n\n\n#### 解释\n\n反向代理： 它代理的是服务端，代服务端接收请求。\n\n\n#### 特点\n\n客户端是无感知代理的存在的，访问者并不知道自己访问的是一个代理。因为客户端不需要任何配置就可以访问。\n\n#### 图例\n![image](https://note.youdao.com/yws/res/2770/CAFD5D535D48411BA2D26B84186CCBFB)\n\n\n\n## THANKS\n\n[Nginx 相关介绍(Nginx是什么?能干嘛?)](https://www.cnblogs.com/wcwnina/p/8728391.html)\n"
+                    },
+                    {
+                        "title": "1", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 1什么是代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "2", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什2么是代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "3", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什3么是代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "4", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么4是代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "5", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么5是代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "6", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么6是代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "7", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么7是代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "8", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么8是代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "9", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么是9代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "10", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么是10代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "11", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么是11代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "12", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么是12代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "13", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么13是代理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    },
+                    {
+                        "title": "14", "abstract": "所谓代理，就是指代表，代表谁做什么事。所谓代理，就是指代表，代表谁做什么事。",
+                        "detail": "\n## 什么是代14理\n\n所谓代理，就是指代表，代表谁做什么事。"
+                    }
+                ]
+            },
+            uiStore: {
 
+            },
+            init: function () {
+                $("body").hide();
+                this.loadArticleList();
+                this.initMDDocument("content", this.dataStore.articleList[0].detail);
+                $("body").show();
+            },
+            initMDDocument: function (id, content) {
+                document.getElementById(id).innerHTML = marked(content);
+            },
+            loadArticleList: function () {
+                var that = this;
+                that.uiStore.articleList = new Vue({
+                    el: '#article-list-container',
+                    data: {
+                        articleList: that.dataStore.articleList
+                    },
+                    methods: {
+                        openDetail: function (detail, event) {
+                            that.initMDDocument("content", detail);
+                        }
+                    },
+                });
+            }
+        };
+        //赋给公共的对象
+        window.mdDocumentTool = myModObj;
+    })();
+
+    /**
+   * 页面初始化
+   */
+    $(function () {
+        mdDocumentTool.init();
+    });
+</script>
+<style>
+    html,
+    body,
+    .article-wrap,
+    #content {
+        width: 100%;
+        height: 100%;
+    }
+
+    .article-list {
+        width: 25%;
+        position: fixed;
+        box-sizing: border-box;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+    }
+
+    .article-content {
+        width: 75%;
+        height: 100%;
+        position: fixed;
+        box-sizing: border-box;
+        left: 25%;
+        top: 0;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    #content,
+    .article-list {
+        overflow-x: auto;
+    }
+
+    #content {
+        box-sizing: border-box;
+        padding: 20px;
+        padding-right: 0px;
+    }
+
+    .artice-item {
+        padding: 20px;
+        padding-top: 10px;
+    }
+
+    .artice-item:hover {
+        background: rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .abstract {
+        font-size: 0.9rem;
+    }
+</style>
 </html>
