@@ -1,6 +1,6 @@
 # ipad-style-blog
 
-## 受大佬启发，做一个ipad风格的blog 
+# 受大佬启发，做一个ipad风格的blog 
 
 [Demo地址](http://118.25.46.230:999/)
 
