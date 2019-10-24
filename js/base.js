@@ -21,7 +21,7 @@
 }());
 
 /**
- * ajax请求
+ * ajax请求this is test
  */
 (function () {
     var ajaxHelper = {
