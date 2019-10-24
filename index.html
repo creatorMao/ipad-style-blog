@@ -55,6 +55,7 @@
                     <div class="items" v-for="app in apps">
                         <div class="app-icon" @click="openApp(app.url,$event)">
                             <div class="icon-root" :class="app.icon"></div>
+                            <div class="news-count" v-if="app.newsCount!=''">{{app.newsCount}}</div>
                         </div>
                         <div class="name">{{app.name}}</div>
                     </div>
@@ -63,6 +64,7 @@
                     <div class="item" v-for="app in apps">
                         <div class="app-icon">
                             <div class="icon-root" :class='app.icon'></div>
+                            <div class="news-count" v-if="app.newsCount!=''">{{app.newsCount}}</div>
                         </div>
                     </div>
                 </div>
@@ -80,20 +82,20 @@
                 /*公共变量存储*/
                 dataStore: {
                     apps:[
-                        {"name":"天气","icon":"icon-weather"},
-                        {"name":"博客","icon":"icon-note"},
-                        {"name":"照片","icon":"icon-photo"},
-                        {"name":"设置","icon":"icon-seting"},
-                        {"name":"音乐","icon":"icon-music"},
-                        {"name":"书籍","icon":"icon-book"},
-                        {"name":"md文档","icon":"icon-md"},
-                        {"name":"支付宝","icon":"icon-alipay"},
-                        {"name":"github","icon":"icon-github","url":'www.github.com'}
+                        {"name":"天气","icon":"icon-weather","newsCount":""},
+                        {"name":"博客","icon":"icon-note","newsCount":""},
+                        {"name":"照片","icon":"icon-photo","newsCount":""},
+                        {"name":"设置","icon":"icon-seting","newsCount":""},
+                        {"name":"音乐","icon":"icon-music","newsCount":""},
+                        {"name":"书籍","icon":"icon-book","newsCount":"1"},
+                        {"name":"md文档","icon":"icon-md","newsCount":""},
+                        {"name":"支付宝","icon":"icon-alipay","newsCount":""},
+                        {"name":"github","icon":"icon-github","url":'www.github.com',"newsCount":""}
                     ],
                     menuBarApps:[
-                        {"name":"天气","icon":"icon-weather"},
-                        {"name":"天气","icon":"icon-photo"},
-                        {"name":"天气","icon":"icon-seting"},
+                        {"name":"天气","icon":"icon-weather","newsCount":""},
+                        {"name":"天气","icon":"icon-photo","newsCount":"1"},
+                        {"name":"天气","icon":"icon-seting","newsCount":""},
                     ]
                 },
                 /*组件对象存储*/
@@ -315,6 +317,7 @@
         position: absolute;
         width: 0px;
         height: 0px;
+        z-index: 4;
     }
     .app-content-show{
         width: 200%;
@@ -437,8 +440,22 @@
         border-radius: 15px;
         background: transparent;
         margin-bottom: 5px;
-        overflow: hidden;
         cursor: pointer;
+        position: relative;
+    }
+    .news-count{
+        width: 23px;
+        height: 23px;
+        position: absolute;
+        top: -5px;
+        right: -2px;
+        border-radius: 50%;
+        background: red;
+        color: white;
+        text-align: center;
+        z-index: 1;
+        line-height: 23px;
+        font-size: 0.9rem;
     }
 
 
