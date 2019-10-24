@@ -8,10 +8,11 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="/js/base.js"></script>
 </head>
 
 <body>
-    <div class="article-wrap flex-row">
+    <div class="article-wrap">
         <div class="article-list" id="article-list-container">
             <div class="artice-item" v-for="article in articleList" @click="openDetail(article.detail,$event)">
                 <h2>{{article.title}}</h2>
@@ -22,8 +23,8 @@
             <div id="content"></div>
         </div>
     </div>
-    </div>
 </body>
+
 <script type="text/javascript">
     (function () {
         var myModObj = {
@@ -95,13 +96,11 @@
 
             },
             init: function () {
-                $("body").hide();
                 this.loadArticleList();
-                this.initMDDocument("content", this.dataStore.articleList[0].detail);
-                $("body").show();
+                this.initMDDocument("#content", this.dataStore.articleList[0].detail);
             },
-            initMDDocument: function (id, content) {
-                document.getElementById(id).innerHTML = marked(content);
+            initMDDocument: function (selector, content) {
+                $(selector).html(marked(content));
             },
             loadArticleList: function () {
                 var that = this;
@@ -112,21 +111,21 @@
                     },
                     methods: {
                         openDetail: function (detail, event) {
-                            that.initMDDocument("content", detail);
+                            that.initMDDocument("#content", detail);
                         }
                     },
                 });
             }
         };
         //赋给公共的对象
-        window.mdDocumentTool = myModObj;
+        window.modObj = myModObj;
     })();
 
     /**
    * 页面初始化
    */
     $(function () {
-        mdDocumentTool.init();
+        modObj.init();
     });
 </script>
 <style>
@@ -177,7 +176,7 @@
     }
 
     .artice-item:hover {
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.1);
         cursor: pointer;
         transition: all 0.3s ease-in-out;
     }

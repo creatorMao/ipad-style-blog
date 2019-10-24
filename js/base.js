@@ -1,13 +1,33 @@
-(function ($) {
+/**
+ * 定义公共工具类对象
+ */
+(function(){
+    if(!window.commonTools)
+    {
+        window.commonTools={};
+    }
+})();
+
+/**
+ * 日期处理
+ */
+(function () {
     var dateHelper = {
         getDate:function() {
            
         }
     };
-
-    if(!window.commonTools)
-    {
-        window.commonTools={};
-    }
     window.commonTools.dateHelper = dateHelper;
-}(jQuery));
+}());
+
+/**
+ * ajax请求
+ */
+(function () {
+    var ajaxHelper = {
+        ajax:function() {
+           
+        }
+    };
+    window.commonTools.ajaxHelper = ajaxHelper;
+}());
