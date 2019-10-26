@@ -1,19 +1,19 @@
 # ipad-style-blog
 
-# 受大佬启发，做一个ipad风格的blog 
+受大佬启发，做一个ipad风格的blog 
 
-# [Demo地址](http://blog.smartcoder.club)
+### [Demo地址](http://blog.smartcoder.club)
 
 
 ![image](src//sample/QQ截图20191020212624.jpg)
 
 
-# 素材
+### 素材
 [设备素材](http://facebook.design/devices) 
 
 
 
-# TODO
+### TODO
 - 桌面构建
 - APPS:照片，博客
 - IOS13动效
