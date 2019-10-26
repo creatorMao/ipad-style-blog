@@ -19,8 +19,14 @@
             <div class="wallpaper"></div>
         </div>
         <div class="layout content">
-            <div class="status-bar flex-row">
-                <span class="electricity">100%</span>
+            <div class="status-bar flex-row" id="system-status"> 
+                <div class="status-icon icon-wifi"></div>
+                <div class="electricity">{{level*100}}%</div>
+                <div class="status-icon icon-battery">
+                    <span class="battery-scale" :class="charging?'battery-charging':''" :style="{'width':+level*78+'%'}">
+                        <!--由于电池图标特殊，宽度到78%时，界面上看起来就是100%的电量了，因此这里以78为系数 -->
+                    </span>
+                </div>
             </div>
             <div class="page flex-row">
                 <div class="page-block time-line">
@@ -111,10 +117,33 @@
                 /*初始化组件*/
                 initUI: function () {
                     this.initApps();
+                    this.initSystemStatus();
                 },
                 /*初始化数据*/
                 initData: function () {
                    
+                },
+                initSystemStatus: function () {
+                    var that = this;
+                    navigator.getBattery().then(function (battery) {
+                        that.dataStore.battery = battery;
+
+                        that.uiStore.systemStatus = new Vue({
+                            el: '#system-status',
+                            data: {
+                                level: that.dataStore.battery.level,
+                                charging:that.dataStore.battery.charging
+                            }
+                        });
+
+                        battery.addEventListener("levelchange", function() {
+                            that.uiStore.systemStatus.level=battery.level;
+                        });
+
+                        battery.addEventListener("chargingchange", function() {
+                            that.uiStore.systemStatus.charging=battery.charging;
+                         });
+                    });
                 },
                 initApps:function(){
                     var that=this;
@@ -275,6 +304,38 @@
     .electricity{
         font-size: 0.75rem;
     }
+    .status-bar>div{
+        margin: 0px 2px;
+    }
+    .status-icon{
+        width: 20px;
+        height: 100%;
+        position:relative;
+    }
+    .icon-wifi{
+        width: 16px;
+        height: 80%;
+    }
+    .battery-scale{
+        width: 66%;
+        height: 40%;
+        background: white;
+        display: block;
+        top: 6px;
+        position: absolute;
+        left: 1px;
+    }
+    .battery-charging{
+        animation:  battery-charging 8s 0.5s linear infinite;
+    }
+    @keyframes battery-charging {
+            from {
+                width:0%
+            }
+            to {
+                width:78%
+            }
+        }
 
     /*背景end*/
 

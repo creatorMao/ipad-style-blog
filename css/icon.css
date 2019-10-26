@@ -46,3 +46,11 @@
     background: url("/src/images/clound.png");
     background-size: cover;
 }
+.icon-battery{
+    background: url("/src/images/battery.png");
+    background-size: cover;
+}
+.icon-wifi{
+    background: url("/src/images/wifi.png");
+    background-size: cover;
+}

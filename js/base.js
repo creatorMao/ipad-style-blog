@@ -31,3 +31,4 @@
     };
     window.commonTools.ajaxHelper = ajaxHelper;
 }());
+
