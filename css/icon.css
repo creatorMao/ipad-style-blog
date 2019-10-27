@@ -54,3 +54,7 @@
     background: url("/src/images/wifi.png");
     background-size: cover;
 }
+.icon-alipay-code{
+    background: url("/src/images/zfb.jpg");
+    background-size: cover;
+}

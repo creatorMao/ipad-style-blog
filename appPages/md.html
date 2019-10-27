@@ -17,6 +17,9 @@
             <div class="artice-item" v-for="article in articleList" @click="openDetail(article.detail,$event)">
                 <h2>{{article.title}}</h2>
                 <span class="abstract">{{article.abstract}}</span>
+                <p class="meta">
+                    Posted by BY on May 5, 2018
+                </p>
             </div>
         </div>
         <div class="article-content">
@@ -173,15 +176,26 @@
     .artice-item {
         padding: 20px;
         padding-top: 10px;
+        border-bottom: 1px solid #eee;
     }
 
-    .artice-item:hover {
-        background: rgba(0, 0, 0, 0.1);
+    .artice-item h2{
+        margin: 10px 0px;
+    }
+    .artice-item h2:hover {
+        color: #0085a1;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
     }
 
     .abstract {
+        font-size: 0.9rem;
+        font-style: italic;
+    }
+    .meta{
+        font-family: Lora,'Times New Roman',serif;
+        color: gray;
+        font-style: italic;
         font-size: 0.9rem;
     }
 </style>
