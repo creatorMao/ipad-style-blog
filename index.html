@@ -30,9 +30,9 @@
             </div>
             <div class="page flex-row" id="page">
                 <div class="page-block time-line">
-                    <div class="items time flex-column">
-                        <span class="hour">10:01</span>
-                        <span class="day">10月11日 星期五</span>
+                    <div class="items time flex-column" id="time">
+                        <span class="hour">{{time.day}}</span>
+                        <span class="day">{{time.date}}</span>
                     </div>
                     <div class="items weather flex-column">
                         <div class="nav flex-row">
@@ -58,8 +58,8 @@
                     </div>
                 </div>
                 <div class="page-block apps-wrap flex-row" id="apps-wrap">
-                    <div class="items" v-for="app in apps">
-                        <div class="app-icon" @click="openApp(app.url,$event)">
+                    <div class="items" v-for="(app,index) in apps">
+                        <div class="app-icon" @click="openApp(app.url,$event,index)">
                             <div class="icon-root" :class="app.icon"></div>
                             <div class="news-count" v-if="app.newsCount!=''">{{app.newsCount}}</div>
                         </div>
@@ -67,8 +67,8 @@
                     </div>
                 </div>
                 <div class="menu-bar flex-row" id="mene-bar-wrap">
-                    <div class="item" v-for="app in apps">
-                        <div class="app-icon" @click="openApp(app.url,$event)">
+                    <div class="item" v-for="(app,index) in apps">
+                        <div class="app-icon" @click="openApp(app.url,$event,index)">
                             <div class="icon-root" :class='app.icon'></div>
                             <div class="news-count" v-if="app.newsCount!=''">{{app.newsCount}}</div>
                         </div>
@@ -100,7 +100,8 @@
                         {"name":"书籍","icon":"icon-book","url":'/appPages/md.html',"newsCount":"1"},
                         {"name":"md文档","icon":"icon-md","url":'/appPages/md.html',"newsCount":""},
                         {"name":"支付宝","icon":"icon-alipay","url":'/appPages/alipay.html',"newsCount":""},
-                        {"name":"github","icon":"icon-github","url":'https://github.com/creatorMao/ipad-style-blog',"newsCount":""}
+                        {"name":"github","icon":"icon-github","url":'https://github.com/creatorMao/ipad-style-blog',"newsCount":""},
+                        {"name":"微博","icon":"icon-weibo","url":'https://weibo.com/liushu845447380/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1',"newsCount":""}
                     ],
                     menuBarApps:[
                         {"name":"天气","icon":"icon-weather","url":'/appPages/md.html',"newsCount":""},
@@ -122,6 +123,7 @@
                 initUI: function () {
                     this.initApps();
                     this.initSystemStatus();
+                    this.initTime();
                 },
                 /*初始化数据*/
                 initData: function () {
@@ -149,6 +151,17 @@
                          });
                     });
                 },
+                initTime:function(){
+                    this.uiStore.time = new Vue({
+                        el: '#time',
+                        data: {
+                            time:{
+                                day:commonTools.dateHelper.getTime(),
+                                date:commonTools.dateHelper.getDate()+"  "+commonTools.dateHelper.getDay(true)
+                            }
+                        }
+                    });
+                },
                 initApps:function(){
                     var that=this;
                     this.uiStore.apps = new Vue({
@@ -157,8 +170,8 @@
                             apps: that.dataStore.apps
                         },
                         methods: {
-                            openApp(url,event) {
-                                that.openApp(url,event);
+                            openApp(url,event,index) {
+                                that.openApp(url,event,'apps',index);
                             }
                         },
                     });
@@ -169,8 +182,8 @@
                             apps: that.dataStore.menuBarApps
                         },
                         methods: {
-                            openApp(url,event) {
-                                that.openApp(url,event);
+                            openApp(url,event,index) {
+                                that.openApp(url,event,'menuBar',index);
                             }
                         },
                     });
@@ -196,7 +209,7 @@
                          }, 600);
                     });
                 },
-                openApp:function(url,event){
+                openApp:function(url,event,ctrlName,index){
                     //如果时url时外网链接，默认重新打开一个标签
                     if(!url)
                     {
@@ -207,6 +220,8 @@
                         window.open(url,'_blank');
                         return;
                     }
+
+                    this.clearNewsCount(ctrlName,index);
 
                     var that=this;
 
@@ -274,6 +289,11 @@
                     $(".wallpaper:first").toggleClass("wallpaper-active");
                     //内容往里缩
                     $(".page:first").toggleClass("page-hide");
+                },
+                clearNewsCount:function(ctrlName,index){
+                    var apps=this.uiStore[ctrlName].apps;
+                    //将未读信息设置为0
+                    apps[index].newsCount="";
                 }
             };
             //赋给公共的对象
@@ -401,8 +421,8 @@
         left: 50%;
         margin-left: -140px;
         bottom: 30px;
-        border-radius: 40px;
-        min-width: 280px;
+        border-radius: 34px;
+        min-width: 226px;
         background: rgba(255, 255, 255, 0.5);
         justify-content: center;
         padding: 7px;
