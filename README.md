@@ -1,8 +1,8 @@
 # ipad-style-blog
 
-# 受大佬启发，做一个ipad风格的blog 
+受大佬启发，做一个ipad风格的blog 
 
-[Demo地址](http://118.25.46.230:999/)
+### [Demo地址](http://blog.smartcoder.club)
 
 
 ![image](src//sample/QQ截图20191020212624.jpg)
