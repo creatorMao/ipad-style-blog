@@ -58,3 +58,7 @@
     background: url("/src/images/zfb.jpg");
     background-size: cover;
 }
+.icon-close{
+    background: url("/src/images/close.png");
+    background-size: cover;
+}

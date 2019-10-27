@@ -75,12 +75,16 @@
                     </div>
                 </div>
                 <div class="app-content">
+                    <div class="btn-wrap flex-row">
+                        <div class="icon-root icon-close back">
+
+                        </div>
+                    </div>
                     <iframe src="" id="content-iframe"></iframe>
                 </div>
             </div>
         </div>
     </div>
-    <div class="back">返回桌面（测试用）</div>
 </body>
      <script type="text/javascript">
         (function () {
@@ -181,6 +185,7 @@
                         that.transition();
                          //关闭内容页
                          $("#content-iframe").hide();
+                         $(".btn-wrap").hide();
                          $("#content-iframe")[0].src="";
 
                          var css=that.dataStore.orignCss;
@@ -253,7 +258,10 @@
 
                     that.transition();
 
+                    $(".btn-wrap").hide();
+
                     setTimeout(function(){
+                        $(".btn-wrap").show()
                         $("#content-iframe").show();
                         $("#content-iframe")[0].src=url;
                     },450)
@@ -549,7 +557,22 @@
         font-size: 0.9rem;
     }
 
-
+    .btn-wrap{
+        width: 100%;
+        height: 40px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        justify-content: flex-end;
+        box-sizing: border-box;
+        align-items: center;
+        padding-right: 10px;
+    }
+    .icon-close{
+        width:30px;
+        height: 30px;
+        cursor: pointer;
+    }
     /*桌面end*/
 </style>
 
