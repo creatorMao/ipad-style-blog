@@ -4,7 +4,7 @@
 
 
 ## 界面展示
-![image](src//sample/QQ截图20191020212624.jpg)
+![image](src//sample/desktop.jpg)
 
 
 ## TODO/DONE
