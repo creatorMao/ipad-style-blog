@@ -1,0 +1,11 @@
+/*APP内容页面的公共样式*/
+.bottom-bar{
+    position: fixed;
+    bottom: 10px;
+    width: 40%;
+    margin-left: -20%;
+    height: 7px;
+    background: rgba(0,0,0,0.5);
+    left: 50%;
+    border-radius: 8px;
+}
