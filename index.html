@@ -63,7 +63,7 @@
                             <div class="icon-root" :class="app.icon"></div>
                             <div class="news-count" v-if="app.newsCount!=''">{{app.newsCount}}</div>
                         </div>
-                        <div class="name">{{app.name}}</div>
+                        <div class="name flex-row flex-row-center" :class='app.isNewInstall'>{{app.name}}</div>
                     </div>
                 </div>
                 <div class="menu-bar flex-row" id="mene-bar-wrap">
@@ -92,16 +92,16 @@
                 /*公共变量存储*/
                 dataStore: {
                     apps:[
-                        {"name":"天气","icon":"icon-weather","url":'/appPages/md.html',"newsCount":""},
-                        {"name":"博客","icon":"icon-note","url":'/appPages/md.html',"newsCount":""},
+                        {"name":"天气","icon":"icon-weather","url":'/appPages/md.html',"newsCount":"","isNewInstall":"app-new"},
+                        {"name":"博客","icon":"icon-note","url":'/appPages/md.html',"newsCount":"",},
                         {"name":"照片","icon":"icon-photo","url":'/appPages/md.html',"newsCount":""},
                         {"name":"设置","icon":"icon-seting","url":'/appPages/md.html',"newsCount":""},
                         {"name":"音乐","icon":"icon-music","url":'/appPages/md.html',"newsCount":""},
                         {"name":"书籍","icon":"icon-book","url":'/appPages/md.html',"newsCount":"1"},
                         {"name":"md文档","icon":"icon-md","url":'/appPages/md.html',"newsCount":""},
                         {"name":"支付宝","icon":"icon-alipay","url":'/appPages/alipay.html',"newsCount":""},
-                        {"name":"github","icon":"icon-github","url":'https://github.com/creatorMao/ipad-style-blog',"newsCount":""},
-                        {"name":"微博","icon":"icon-weibo","url":'https://weibo.com/liushu845447380/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1',"newsCount":""}
+                        {"name":"github","icon":"icon-github","url":'https://github.com/creatorMao/ipad-style-blog',"newsCount":"","isNewInstall":"app-new"},
+                        {"name":"微博","icon":"icon-weibo","url":'https://weibo.com/liushu845447380/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1',"newsCount":"","isNewInstall":"app-new"}
                     ],
                     menuBarApps:[
                         {"name":"天气","icon":"icon-weather","url":'/appPages/md.html',"newsCount":""},
@@ -221,6 +221,7 @@
                     if(url.substring(0,4)=="http")
                     {
                         window.open(url,'_blank');
+                        this.clearNewsCount(ctrlName,index);
                         return;
                     }
 
@@ -297,6 +298,8 @@
                     var apps=this.uiStore[ctrlName].apps;
                     //将未读信息设置为0
                     apps[index].newsCount="";
+                    //将新应用状态改成正常
+                    apps[index].isNewInstall="";
                 },    
             };
             //赋给公共的对象
@@ -555,7 +558,15 @@
         text-align: center;
         color: white;
     }
-
+    .apps-wrap .app-new::before {
+       content: "";
+       display: block;
+       width: 8px;
+       height: 8px;
+       border-radius: 50%;
+       background: rgba(123,202,255,1);
+       margin-right: 5px;
+    }
     .app-icon {
         width: 70px;
         height: 70px;
