@@ -28,59 +28,69 @@
                     </span>
                 </div>
             </div>
-            <div class="page flex-row" id="page">
-                <div class="page-block time-line">
-                    <div class="items time flex-column" id="time">
-                        <span class="hour">{{time.day}}</span>
-                        <span class="day">{{time.date}}</span>
-                    </div>
-                    <div class="items weather flex-column">
-                        <div class="nav flex-row">
-                            <div class="left flex-row">
-                                    <div class="icon-weather"></div>
-                                    <div>天气</div>
-                            </div>
-                            <div class="icon-right-arow"></div>
-                        </div>
-                        <div class="weather-detail flex-row">
-                            <div class="icon-clound">
-                            </div>
-                            <div class="weather-text">
-                                <div class="area">杭州市</div>
-                                <div>多云</div>
-                                <div>降雨概率：10%</div>
-                            </div>
-                            <div class="weather-text weather-temp">
-                                <div class="current-temp">23</div>
-                                <div>28/21</div>
-                            </div>
-                        </div>
+            <div class="menu-bar flex-row" id="mene-bar-wrap">
+                <div class="item" v-for="(app,index) in apps">
+                    <div class="app-icon" @click="openApp(app.url,$event,index)">
+                        <div class="icon-root" :class='app.icon'></div>
+                        <div class="news-count" v-if="app.newsCount!=''">{{app.newsCount}}</div>
                     </div>
                 </div>
-                <div class="page-block apps-wrap flex-row" id="apps-wrap">
-                    <div class="items" v-for="(app,index) in apps">
-                        <div class="app-icon" @click="openApp(app.url,$event,index)">
-                            <div class="icon-root" :class="app.icon"></div>
-                            <div class="news-count" v-if="app.newsCount!=''">{{app.newsCount}}</div>
-                        </div>
-                        <div class="name flex-row flex-row-center" :class='app.isNewInstall'>{{app.name}}</div>
-                    </div>
-                </div>
-                <div class="menu-bar flex-row" id="mene-bar-wrap">
-                    <div class="item" v-for="(app,index) in apps">
-                        <div class="app-icon" @click="openApp(app.url,$event,index)">
-                            <div class="icon-root" :class='app.icon'></div>
-                            <div class="news-count" v-if="app.newsCount!=''">{{app.newsCount}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="app-content">
-                    <div class="btn-wrap flex-row">
-                        <div class="icon-root icon-close back">
+            </div>
+            <div class="app-content">
+                <div class="btn-wrap flex-row">
+                    <div class="icon-root icon-close back">
 
+                    </div>
+                </div>
+                <iframe src="" id="content-iframe"></iframe>
+            </div>
+            <div class="page-dot flex-row-center">
+                <div class="dot dot-active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="pages-wrap flex-row">
+                <div class="page flex-row" id="page">
+                    <div class="page-block time-line">
+                        <div class="items time flex-column" id="time">
+                            <span class="hour">{{time.day}}</span>
+                            <span class="day">{{time.date}}</span>
+                        </div>
+                        <div class="items weather flex-column">
+                            <div class="nav flex-row">
+                                <div class="left flex-row">
+                                        <div class="icon-weather"></div>
+                                        <div>天气</div>
+                                </div>
+                                <div class="icon-right-arow"></div>
+                            </div>
+                            <div class="weather-detail flex-row">
+                                <div class="icon-clound">
+                                </div>
+                                <div class="weather-text">
+                                    <div class="area">杭州市</div>
+                                    <div>多云</div>
+                                    <div>降雨概率：10%</div>
+                                </div>
+                                <div class="weather-text weather-temp">
+                                    <div class="current-temp">23</div>
+                                    <div>28/21</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <iframe src="" id="content-iframe"></iframe>
+                    <div class="page-block apps-wrap flex-row" id="apps-wrap">
+                        <div class="items" v-for="(app,index) in apps">
+                            <div class="app-icon" @click="openApp(app.url,$event,index)">
+                                <div class="icon-root" :class="app.icon"></div>
+                                <div class="news-count" v-if="app.newsCount!=''">{{app.newsCount}}</div>
+                            </div>
+                            <div class="name flex-row flex-row-center" :class='app.isNewInstall'>{{app.name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page flex-row" id="page2">
+                   page 2
                 </div>
             </div>
         </div>
@@ -404,6 +414,14 @@
     /*背景end*/
 
     /*桌面begin*/
+    .pages-wrap{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0%;
+        transition:all 0.3s ease;
+    }
     .page {
         width: 100%;
         height: 100%;
@@ -412,6 +430,7 @@
         box-sizing: border-box;
         color: white;
         transition: padding 0.4s ease-in-out;   
+        flex-shrink:0
     }
     .page-hide{
         padding: 45px;
@@ -421,11 +440,26 @@
         box-sizing: border-box;
         height: 100%;
     }
-
+    .page-dot{
+        position: absolute;
+        width: 100%;
+        height: 50px;
+        bottom: 115px;
+    }
+    .dot{
+        width: 8px;
+        height: 8px;
+        background: rgba(255,255,255,0.3);
+        border-radius: 100%;
+        margin: 0 5px;
+    }
+    .dot-active{
+        background:rgba(255,255,255,1);;
+    }
     .menu-bar {
         position: absolute;
         left: 50%;
-        margin-left: -140px;
+        margin-left: -127px;
         bottom: 30px;
         border-radius: 34px;
         min-width: 226px;
@@ -433,6 +467,7 @@
         justify-content: center;
         padding: 7px;
         transition: all 0.5s ease-in-out;
+        z-index: 2;
     }
     .menu-bar-hide{
         bottom: -100px;
