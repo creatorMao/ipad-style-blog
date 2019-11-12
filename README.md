@@ -1,6 +1,6 @@
 # ipad-style-blog
 
-受大佬启发，做一个ipad风格的blog [预览地址](http://blog.smartcoder.club)
+受大佬启发，做一个ipad风格的blog. <a href='http://blog.smartcoder.club' target="_blank">预览地址</a>
 
 
 ## 界面展示
